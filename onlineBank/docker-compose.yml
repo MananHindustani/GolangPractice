@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+ db:
+  image: "postgres:latest"
+  volumes:
+   - postgresdata:/var/lib/postgres/data
+  environment:
+    - POSTGRES_DB=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_USER=postgres
+  ports:
+   - "5432:5432"
+ onlinebank:
+  image: "onlinebank:latest"
+  stdin_open: true
+  volumes:
+   - "/home/dell/gowork:/go"
+  ports:
+   - "7000:7000"
+  environment:
+   - POSTGRES_DB=postgres
+   - POSTGRES_PASSWORD=postgres
+   - POSTGRES_USER=postgres
+  depends_on:
+   - db
+volumes:
+ postgresdata:
